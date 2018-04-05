@@ -19,10 +19,11 @@
   </repositories>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.apache.storm/storm -->
     <dependency>
-      <groupId>storm</groupId>
-      <artifactId>storm</artifactId>
-      <version>0.9.0.1</version>
+      <groupId>org.apache.storm</groupId>
+      <artifactId>storm-core</artifactId>
+      <version>1.0.5</version>
       <!-- keep storm out of the jar-with-dependencies -->
       <scope>provided</scope>
     </dependency>
