@@ -37,15 +37,18 @@ public class TopWordFinderTopologyPartA {
 
     ------------------------------------------------- */
 
+      builder.setSpout("spout", new RandomSentenceSpout(), 5);
+      builder.setBolt("split", new SplitSentenceBolt(), 8).shuffleGrouping("spout");
+      builder.setBolt("count", new WordCountBolt(), 12).fieldsGrouping("split", new Fields("word"));
 
-    config.setMaxTaskParallelism(3);
 
-    LocalCluster cluster = new LocalCluster();
-    cluster.submitTopology("word-count", config, builder.createTopology());
+        config.setMaxTaskParallelism(3);
 
-    //wait for 60 seconds and then kill the topology
-    Thread.sleep(60 * 1000);
+        LocalCluster cluster = new LocalCluster();
+        cluster.submitTopology("word-count", config, builder.createTopology());
 
-    cluster.shutdown();
+        //wait for 60 seconds and then kill the topology
+        Thread.sleep(60 * 1000);
+        cluster.shutdown();
   }
 }
