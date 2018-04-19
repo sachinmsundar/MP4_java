@@ -41,7 +41,10 @@ public class TopNFinderBolt extends BaseBasicBolt {
 
     Integer count = 0;
     for(Map.Entry<Integer, String> e : topWordsTreeMap.entrySet()){
-        if (count == this.N){ break; }
+        if (count == this.N){ 
+          break; 
+        }
+      
         topTen.put(s, cnt);
         count++;
     }
