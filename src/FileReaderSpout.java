@@ -56,7 +56,7 @@ public class FileReaderSpout implements IRichSpout {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -65,7 +65,10 @@ public class FileReaderSpout implements IRichSpout {
 
       try {
           while((line = br.readLine()) != null){
-              this._collector.emit(new Values(line), line);
+              line = line.trim();
+              if(line.length()>0){
+                  _collector.emit(new Values(line));
+              }
           }
       } catch (IOException e) {
           e.printStackTrace();
