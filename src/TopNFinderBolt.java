@@ -35,15 +35,18 @@ public class TopNFinderBolt extends BaseBasicBolt {
     ------------------------------------------------- */
     String s = tuple.getString(0);
     Integer cnt = tuple.getInteger(1);
+    HashMap<String, Integer> topTen = new HashMap<String, Integer>();
 
     topWordsTreeMap.put(cnt, s);
 
     Integer count = 0;
     for(Map.Entry<Integer, String> e : topWordsTreeMap.entrySet()){
         if (count == this.N){ break; }
-
-        currentTopWords.put(e.getValue(), e.getKey());
+        topTen.put(s, cnt);
+        count++;
     }
+
+    currentTopWords.putAll(topTen);
 
     //reports the top N words periodically
     if (System.currentTimeMillis() - lastReportTime >= intervalToReport) {
