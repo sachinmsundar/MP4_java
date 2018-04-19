@@ -17,6 +17,7 @@ public class FileReaderSpout implements IRichSpout {
   private SpoutOutputCollector _collector;
   private TopologyContext context;
   private FileReader rd;
+  private boolean allDone = false;
 
 
     @Override
@@ -50,6 +51,15 @@ public class FileReaderSpout implements IRichSpout {
     2. don't forget to sleep when the file is entirely read to prevent a busy-loop
 
     ------------------------------------------------- */
+
+    if(allDone == true){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     BufferedReader br = new BufferedReader(rd);
     String line;
 
@@ -60,11 +70,7 @@ public class FileReaderSpout implements IRichSpout {
       } catch (IOException e) {
           e.printStackTrace();
       }finally {
-          try {
-              Thread.sleep(2000);
-          } catch (InterruptedException e) {
-              e.printStackTrace();
-          }
+          allDone = true;
       }
 
 
